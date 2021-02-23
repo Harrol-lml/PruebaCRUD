@@ -1,0 +1,540 @@
+<html>
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+* {box-sizing: border-box}
+body {font-family: "Lato", sans-serif;}
+
+/* Style the tab */
+.tab {
+  float:  left;
+  border: 1px solid #ccc;
+  background-color: #f1f1f0;
+  width: 30%;
+  //height: 300px;
+}
+
+/* Style the buttons inside the tab */
+.tab button {
+  display: block;
+  background-color: inherit;
+  color: black;
+  padding: 22px 16px;
+  width: 100%;
+  border: none;
+  outline: none;
+  text-align: left;
+  cursor: pointer;
+  transition: 0.3s;
+  font-size: 17px;
+}
+
+/* Change background color of buttons on hover */
+.tab button:hover {
+  background-color: #ddd;
+}
+
+/* Create an active/current "tab button" class */
+.tab button.active {
+  background-color: #ccc;
+}
+
+/* Style the tab content */
+.tabcontent {
+  float: left;
+  padding: 0px 12px;
+  border: 1px solid #ccc;
+  width: 70%;
+  //border-left: none;
+  //border-top: none;
+  //height: 300px;
+}
+
+.container {
+  padding: 16px;
+  background-color: white;
+}
+.tab1 {
+  overflow: hidden;
+  border: 1px solid #ccc;
+  background-color: #f1f1f1;
+}
+
+/* Style the buttons inside the tab */
+.tab1 button {
+  background-color: inherit;
+  float: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  transition: 0.3s;
+  font-size: 17px;
+}
+
+/* Change background color of buttons on hover */
+.tab1 button:hover {
+  background-color: #ddd;
+}
+
+/* Create an active/current tablink class */
+.tab1 button.active {
+  background-color: #ccc;
+}
+
+/* Style the tab content */
+.tabcontent1 {
+  display: none;
+  padding: 6px 12px;
+  border: 1px solid #ccc;
+  border-top: none;
+}
+* Add padding to containers */
+.container1 {
+  padding: 16px;
+  background-color: white;
+}
+
+/* Full-width input fields */
+input[type=text], input[type=password] {
+  width: 100%;
+  padding: 10px;
+  margin: 5px 0 22px 0;
+  display: inline-block;
+  border: none;
+  background: #f1f1f1;
+  float: left;
+}
+
+input[type=text]:focus, input[type=password]:focus {
+  background-color: #ddd;
+  outline: none;
+}
+
+input[type=number], input[type=number] {
+  width: 100%;
+  padding: 10px;
+  margin: 5px 0 22px 0;
+  display: inline-block;
+  border: none;
+  background: #f1f1f1;
+}
+
+input[type=number]:focus, input[type=number]:focus {
+  background-color: #ddd;
+  outline: none;
+}
+/* Overwrite default styles of hr */
+hr {
+  border: 1px solid #f1f1f1--;
+  margin-bottom: 25px;
+}
+.submit {
+  background-color: #4CAF50;
+  color: white;
+  padding: 16px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  opacity: 0.9;
+}
+.submit:hover {
+  opacity: 1;
+}
+.btn-group button {
+  background-color: #4CAF50; /* Green background */
+  border: 1px solid green; /* Green border */
+  color: white; /* White text */
+  padding: 10px 24px; /* Some padding */
+  cursor: pointer; /* Pointer/hand icon */
+  float: left; /* Float the buttons side by side */
+  width: 100%;
+}
+
+/* Clear floats (clearfix hack) */
+.btn-group:after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+.btn-group button:not(:last-child) {
+  border-right: none; /* Prevent double borders */
+}
+
+/* Add a background color on hover */
+.btn-group button:hover {
+  background-color: #3e8e41;
+}
+
+</style>
+
+<script>
+	
+	function myFunction() {
+		var txt;
+		var r = confirm("Desea eliminar el Id: " + document.getElementById("idBorrar").value);
+		if (r == true) {
+			var val= document.getElementById("Tipo").value;
+			var eliminar= document.getElementById("idBorrar").value;
+			if(val==1){				
+				$.ajax({
+					type: "GET",
+					url: "/eliminarProducto?eliminar="+eliminar,
+					success: function(data) {
+						alert(data);//$("#datos").html(data);
+						}
+					});
+				}
+			if(val==2){
+				$.ajax({
+					type: "GET",
+					url: "/eliminarCategoria?eliminar="+eliminar,
+					success: function(data) {
+						alert(data);//$("#datos").html(data);
+						}
+					});
+				}
+			txt = "You pressed OK!";
+			} else {
+				txt = "You pressed Cancel!";
+				}
+		 //document.getElementById("demo").innerHTML = txt;
+	}
+
+$(document).ready(function(){
+	
+	$('#buscar').click(function(){
+		var num=document.getElementById("bus").value;
+		$.ajax({
+			type: "GET",
+			url: "/buscar?busqueda="+num,
+			success: function(data) {
+				$("#datos").html(data);
+				}
+			});
+		});
+		
+	$('#verTod').click(function(){
+		//var num=document.getElementById("bus").value;
+		$.ajax({
+			type: "GET",
+			url: "/listarProductos",
+			success: function(data) {
+				$("#datos").html(data);
+				}
+			});
+		});
+		
+	$('#buscarc').click(function(){
+		var num=document.getElementById("busc").value;
+		$.ajax({
+			type: "GET",
+			url: "/buscarc?busqueda="+num,
+			success: function(data) {
+				$("#datosc").html(data);
+				}
+			});
+		});
+		
+	$('#verTodc').click(function(){
+		//var num=document.getElementById("bus").value;
+		$.ajax({
+			type: "GET",
+			url: "/listarCategorias",
+			success: function(data) {
+				$("#datosc").html(data);
+				}
+			});
+		});
+		
+		$('#Tipo').click(function(){
+			var val= document.getElementById("Tipo").value;
+			//var aux=0;
+			//if(val=='Producto'){aux=1;}
+			//if(val=='Categoria'){aux=2;}
+			//alert(val);
+	
+		});
+});
+				
+			
+</script>
+</head>
+<body>
+
+<center><h2><font size=6&gt;Este texto es más grande, size=6</font>{{tit}}</h2></center>
+
+<div class="tab">
+  <button class="tablinks" onclick="openCity(event, 'Agregar')"id="defaultOpen">Agregar</button>
+  <button class="tablinks" onclick="openCity(event, 'Listar')">Listar</button>
+  <button class="tablinks" onclick="openCity(event, 'Actualizar')">Actualizar</button>
+  <button class="tablinks" onclick="openCity(event, 'Eliminar')">Eliminar</button>
+</div>
+
+<div id="Agregar" class="tabcontent">
+  <div class="tab1">
+  <button class="tablinks" onclick="openPes(event, 'pes1')">Agregar Producto</button>
+  <button class="tablinks" onclick="openPes(event, 'pes2')">Agregar Categoria de Producto</button>
+ <!-- <button class="tablinks" onclick="openPes(event, 'pes3')"></button>-->
+	</div>
+	<div id="pes2" class="tabcontent1">
+		
+		<form id="form" action="/agregarCategoria" >
+			<p>
+				<label for="id"><h6>Id Categoria</h6></label>
+				<input id="Nid" name="id" minlength="5" type="number" required>
+				</p>
+				
+			<p>
+				<label for="name"><h6>Nombre</h6></label>
+				<input id="name" name="Nombre" minlength="2" type="text" required>
+				</p>
+				
+			<p>
+				<label for="Codigo"><h6>Codigo</h6></label>
+				<input id="Codigo" type="text" name="Codigo" required>
+				</p>
+				
+			<p>
+				<label for="Descripcion"><h6>Descripcion</h6></label>
+				<input id="desc" type="text" name="descr" required>
+				</p>
+				
+			<!--<p>
+			    <label for="Activo">Activo</label>
+			    <input id="activo" name="activo" type="boolean" required>
+			    </p>-->
+			    
+			<p>
+				<input class="submit" type="submit" value="Registrar" id ="reg">
+				</p>
+		</form>
+	</div>
+	
+	<div id="pes1" class="tabcontent1">
+		<form id="formP" action="/agregarProducto" >
+			<p>
+				<label for="id"><h6>Id Producto</h6></label>
+				<input id="id" name="id" minlength="5" type="number" required>
+				</p>
+				
+			<p>
+				<label for="name"><h6>Nombre</h6></label>
+				<input id="nameP" name="Nombre" minlength="2" type="text" required>
+				</p>
+				
+			<p>
+				<label for="Codigo"><h6>Codigo</h6></label>
+				<input id="CodigoP" type="text" name="Codigo" required>
+				</p>
+				
+			<p>
+				<label for="Descripcion"><h6>Descripcion</h6></label>
+				<input id="desci" type="text" name="descr" required>
+				</p>
+				
+			<p>
+			    <label for="Marca"><h6>Marca</h6></label>
+			    <input id="marca" name="marca" type="text" required>
+			    </p>
+			    
+			 <p>
+			    <label for="Categoria"><h6>Id Categoria</h6></label>
+			    <input id="idCate" name="idCate" type="number" required>
+			    </p>
+			    
+			 <p>
+			    <label for="precio"><h6>Precio</h6></label>
+			    <input id="precio" name="precio" type="number" required>
+			    </p>
+			    
+			<p>
+				<input class="submit" type="submit" value="Registrar" id ="regi">
+				</p>
+		</form>
+		</div>
+		
+	<div id="pes3" class="tabcontent1"></div>
+</div>
+
+<div id="Listar" class="tabcontent">
+  <!--<h3>Listar</h3-->
+  <div class="tab1">
+  <button class="tablinks" onclick="openPes(event, 'listarPro')">Buscar Producto</button>
+  <button class="tablinks" onclick="openPes(event, 'listarCate')">Buscar Categoria de Producto</button>
+ <!-- <button class="tablinks" onclick="openPes(event, 'pes3')"></button>-->
+	</div>
+	<div id="listarPro" class="tabcontent1">
+		<p>Buscar id Prducto: <input type = "text" id="bus"></p>
+		<div class="btn-group">
+			<button id="buscar">Buscar</button>
+			<button id="verTod">Ver Todos</button>
+			</div>
+		<div id="datos"></div>		
+	</div>
+	
+	<div id="listarCate" class="tabcontent1">
+		<p>Buscar id Cartegoria: <input type = "text" id="busc"></p>
+		<div class="btn-group">
+			<button id="buscarc">Buscar</button>
+			<button id="verTodc">Ver Todos</button>
+			</div>
+		<div id="datosc"></div>
+		</div>
+		
+	<div id="pes3" class="tabcontent1"></div>
+  
+</div>
+
+<div id="Actualizar" class="tabcontent">
+	
+
+  <div class="tab1">
+  <button class="tablinks" onclick="openPes(event, 'actuProd')">Actualizar Producto</button>
+  <button class="tablinks" onclick="openPes(event, 'actuCate')">Actualizar Categoria de Producto</button>
+ <!-- <button class="tablinks" onclick="openPes(event, 'pes3')"></button>-->
+	</div>
+	<div id="actuCate" class="tabcontent1">
+		
+		<form id="formac" action="/actuCategoria" >
+			<p>
+				<label for="id"><h6>Id Categoria a Actualizar</h6></label>
+				<input id="Nida" name="ida" minlength="5" type="number" required>
+				
+				<label for="id"><h6>Id Categoria</h6></label>
+				<input id="Nid" name="id" minlength="5" type="number" required>
+				
+				
+			
+				<label for="name"><h6>Nombre</h6></label>
+				<input id="name" name="Nombre" minlength="2" type="text" required>
+				
+				
+			
+				<label for="Codigo"><h6>Codigo</h6></label>
+				<input id="Codigo" type="text" name="Codigo" required>
+				
+				
+			
+				<label for="Descripcion"><h6>Descripcion</h6></label>
+				<input id="desc" type="text" name="descr" required>
+				</p>
+				
+			<!--<p>
+			    <label for="Activo">Activo</label>
+			    <input id="activo" name="activo" type="boolean" required>
+			    </p>-->
+			    
+			<p>
+				<input class="submit" type="submit" value="Actualizar Categoria" id ="reg">
+				</p>
+		</form>
+	</div>
+	
+	<div id="actuProd" class="tabcontent1">
+		<form id="formactP" action="/actualizarProducto" >
+			
+			<p>
+				<label for="id"><h6>Id Producto a Actualizar</h6></label>
+				<input id="Nida" name="ida" minlength="5" type="number" required>
+				</p>
+			
+			<p>
+				<label for="id"><h6>Id Producto</h6></label>
+				<input id="id" name="id" minlength="5" type="number" required>
+				</p>
+				
+			<p>
+				<label for="name"><h6>Nombre</h6></label>
+				<input id="nameP" name="Nombre" minlength="2" type="text" required>
+				</p>
+				
+			<p>
+				<label for="Codigo"><h6>Codigo</h6></label>
+				<input id="CodigoP" type="text" name="Codigo" required>
+				</p>
+				
+			<p>
+				<label for="Descripcion"><h6>Descripcion</h6></label>
+				<input id="desci" type="text" name="descr" required>
+				</p>
+				
+			<p>
+			    <label for="Marca"><h6>Marca</h6></label>
+			    <input id="marca" name="marca" type="text" required>
+			    </p>
+			    
+			 <p>
+			    <label for="Categoria"><h6>Id Categoria</h6></label>
+			    <input id="idCate" name="idCate" type="number" required>
+			    </p>
+			    
+			 <p>
+			    <label for="precio"><h6>Precio</h6></label>
+			    <input id="precio" name="precio" type="number" required>
+			    </p>
+			    
+			<p>
+				<input class="submit" type="submit" value="Actualizar Producto" id ="regi">
+				</p>
+		</form>
+		</div>
+		
+	<div id="pes3" class="tabcontent1"></div>
+</div>
+
+<div id="Eliminar" class="tabcontent">
+  <!--<h3>Eliminar</h3>
+  <!--<label for="tipo">Eliminar</label-->
+  <center><label SIZE= 10 Style="height:25px; width:25%">Elminar producto o categoria</label></center>
+ 
+  <select name="Tipo" id="Tipo"  size="1" style=" font-size:10px; font-family:Verdana, Arial, Helvetica, sans-serif; height:25px; width:100%">
+	  <option Value=1 size="1" >Producto</option>
+	  <option value=2 size="1" >Categoria</option>
+	  </select>	  
+	  <br><br>
+	  <center><label SIZE= 10 Style="height:25px; width:25%">Id a Eliminar</label></center>
+	  <input id="idBorrar" name="ida" minlength="5" type="number" required >
+	  <button class="submit" id="elminar" onclick="myFunction()">Eliminar</button>
+	  
+</div>
+
+<script>
+function openCity(evt, cityName) {
+  var i, tabcontent, tablinks;
+  tabcontent = document.getElementsByClassName("tabcontent");
+  for (i = 0; i < tabcontent.length; i++) {
+    tabcontent[i].style.display = "none";
+  }
+  tablinks = document.getElementsByClassName("tablinks");
+  for (i = 0; i < tablinks.length; i++) {
+    tablinks[i].className = tablinks[i].className.replace(" active", "");
+  }
+  document.getElementById(cityName).style.display = "block";
+  evt.currentTarget.className += " active";
+}
+
+// Get the element with id="defaultOpen" and click on it
+document.getElementById("defaultOpen").click();
+function openPes(evt, cityName) {
+  var i, tabcontent, tablinks;
+  tabcontent = document.getElementsByClassName("tabcontent1");
+  for (i = 0; i < tabcontent.length; i++) {
+    tabcontent[i].style.display = "none";
+  }
+  tablinks = document.getElementsByClassName("tablinks");
+  for (i = 0; i < tablinks.length; i++) {
+    tablinks[i].className = tablinks[i].className.replace(" active", "");
+  }
+  document.getElementById(cityName).style.display = "block";
+  evt.currentTarget.className += " active";
+}
+
+
+</script>
+   
+</body>
+</html>
