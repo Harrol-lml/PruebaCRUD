@@ -94,32 +94,6 @@ def deleteCate():
 	ideliminar=request.args['eliminar']
 	return man.deleteCategoria(ideliminar)#man.buscar(i,ps)
 	
-@app.route("/prueba")
-def prueba():
-	tit="Hospital Pr1"
-	nombre=request.args['Nombre']
-	ps=request.args['pass']
-	t=request.args['Tipo']
-	i=request.args['id']
-	e=request.args['Email']
-	tel=request.args['Tel']
-	#print(nombre, ps, t,str(i), e, str(tel))
-	if int(man.validador(i,t,nombre,e,str(tel),ps))==0:	
-		return render_template("index.html",tit=tit)+'El id ya se encuentra regstrado, intente con otro id...'
-	else:
-		return render_template("index.html",tit=tit)+' valide su correo... '
-	return render_template("index.html",tit=tit)
-	
-@app.route("/iniciar")
-def iniciar():
-	i=request.args['nombre']
-	ps=request.args['ps']
-	return man.buscar(i,ps)
-
-	
-@app.route("/consultar")
-def consultar():
-	return man.consultar_todo()
 
 if __name__ == "__main__":
 	app.run("0.0.0.0")

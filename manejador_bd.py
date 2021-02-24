@@ -244,7 +244,6 @@ class manejador_bd:
 		
 	#AGREGAR CATEGORIA / PRODUCTO	
 	
-	#def addProd(self, idp, cod, name, desc, marca, categ, precio):
 	
 	def addCategoria(self, idc, cod, name,desc,actv):
 		connection = psycopg2.connect(connection_address)

@@ -174,7 +174,6 @@ hr {
 <script>
 	
 	function myFunction() {
-		var txt;
 		var r = confirm("Desea eliminar el Id: " + document.getElementById("idBorrar").value);
 		if (r == true) {
 			var val= document.getElementById("Tipo").value;
@@ -197,11 +196,10 @@ hr {
 						}
 					});
 				}
-			txt = "You pressed OK!";
+			
 			} else {
-				txt = "You pressed Cancel!";
+				
 				}
-		 //document.getElementById("demo").innerHTML = txt;
 	}
 
 $(document).ready(function(){
@@ -218,7 +216,6 @@ $(document).ready(function(){
 		});
 		
 	$('#verTod').click(function(){
-		//var num=document.getElementById("bus").value;
 		$.ajax({
 			type: "GET",
 			url: "/listarProductos",
@@ -240,7 +237,6 @@ $(document).ready(function(){
 		});
 		
 	$('#verTodc').click(function(){
-		//var num=document.getElementById("bus").value;
 		$.ajax({
 			type: "GET",
 			url: "/listarCategorias",
@@ -250,14 +246,6 @@ $(document).ready(function(){
 			});
 		});
 		
-		$('#Tipo').click(function(){
-			var val= document.getElementById("Tipo").value;
-			//var aux=0;
-			//if(val=='Producto'){aux=1;}
-			//if(val=='Categoria'){aux=2;}
-			//alert(val);
-	
-		});
 });
 				
 			
